@@ -1,3 +1,26 @@
+desktop.ini
+node_modules
+/img/
+
+# IntelliJ project files
 .idea/
 *.iml
-desktop.ini
+
+# Visual Studio Code project files
+.vscode/
+
+# Misc dev/scripting files
+trash
+trash_in
+
+# Generated files
+sitemap.xml
+*.DS_Store
+.rsync-filter
+
+# Generated service worker files
+sw.js
+sw-injector.js
+
+# Log files
+*.log
