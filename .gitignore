@@ -1,6 +1,6 @@
 desktop.ini
 node_modules
-/img/
+img
 
 # IntelliJ project files
 .idea/
@@ -16,6 +16,7 @@ trash_in
 # Generated files
 sitemap.xml
 *.DS_Store
+Thumbs.db
 .rsync-filter
 
 # Generated service worker files
