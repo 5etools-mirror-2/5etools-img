@@ -67,14 +67,19 @@ jobs:
          -  name: Log In to Registry
             run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-         -  name: Build and push the docker image 
-            uses: docker/build-push-action@master
-            with:
-             context: .
-             builder: ${{ steps.buildx.outputs.name }}
-             platforms: linux/arm64,linux/amd64
-             push: true
-             tags: ghcr.io/kokomo123/5etools-img:latest
-             #labels: ${{ steps.meta.outputs.labels }}
+         -  name: Build the docker image 
+            run: |
+              docker build -t $IMAGE_NAME
+
+         -  name: Push image
+            run: |
+               echo IMAGE_ID=$IMAGE_ID
+               echo IMAGE_VERSION=$IMAGE_VERSION
+               docker tag $IMAGE_NAME $IMAGE_ID:$IMAGE_VERSION
+               # Always tag latest when pushing a tag, as we don't expect to ever merge old tags
+               [[ "${{ github.ref }}" == "refs/tags/"* ]] && docker tag $IMAGE_NAME $IMAGE_ID:latest
+               docker push $IMAGE_ID:$IMAGE_VERSION
+               docker push $IMAGE_ID:latest
+             
                
          # endregion
