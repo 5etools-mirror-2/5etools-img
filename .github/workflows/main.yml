@@ -74,7 +74,7 @@ jobs:
              builder: ${{ steps.buildx.outputs.name }}
              platforms: linux/arm64,linux/amd64
              push: true
-             tags: ghcr.io/kokomo/5etools-img:latest
+             tags: ghcr.io/kokomo123/5etools-img:latest
              #labels: ${{ steps.meta.outputs.labels }}
                
          # endregion
