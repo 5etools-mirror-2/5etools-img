@@ -69,7 +69,7 @@ jobs:
 
          -  name: Build the docker image 
             run: |
-              docker build -t $IMAGE_NAME
+              docker build -t $IMAGE_NAME .
 
          -  name: Push image
             run: |
