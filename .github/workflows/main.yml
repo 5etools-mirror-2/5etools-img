@@ -80,10 +80,8 @@ jobs:
                echo IMAGE_ID=$IMAGE_ID
                echo IMAGE_VERSION=$IMAGE_VERSION
                docker tag $IMAGE_NAME $IMAGE_ID:$IMAGE_VERSION
-               # Always tag latest when pushing a tag, as we don't expect to ever merge old tags
-               [[ "${{ github.ref }}" == "refs/tags/"* ]] && docker tag $IMAGE_NAME $IMAGE_ID:latest
                docker push $IMAGE_ID:$IMAGE_VERSION
-               docker push $IMAGE_ID:latest
+               
              
                
          # endregion
