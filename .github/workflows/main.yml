@@ -64,7 +64,7 @@ jobs:
 
          -  name: Build the docker image 
             run: |
-              docker build -t $IMAGE_NAME --platform linux/amd64,linux/arm64
+              docker build --platform linux/amd64,linux/arm64 -t $IMAGE_NAME 
 
          -  name: Push image
             run: |
