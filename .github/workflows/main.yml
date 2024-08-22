@@ -79,7 +79,7 @@ jobs:
             run: |
                echo IMAGE_ID=$IMAGE_ID
                echo IMAGE_VERSION=$IMAGE_VERSION
-               docker tag $IMAGE_NAME $IMAGE_ID:$IMAGE_VERSION
+               docker tag $IMAGE_ID:$IMAGE_VERSION
                docker push $IMAGE_ID:$IMAGE_VERSION
                
              
