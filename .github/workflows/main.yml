@@ -45,20 +45,30 @@ jobs:
          -  uses: actions/checkout@master
 
          # See: https://stackoverflow.com/a/58178121
-         #-  name: Set Env
-         #   run: |
-         #      IMAGE_VERSION=${{ github.ref_name }}
-         #      # Strip "v" prefix from tag name
-         #      [[ "${{ github.ref }}" == "refs/tags/"* ]] && IMAGE_VERSION=$(echo $IMAGE_VERSION | sed -e 's/^v//')
-         #      echo "IMAGE_VERSION=$IMAGE_VERSION" >> $GITHUB_ENV
-         #
-         #      echo "IMAGE_ID=$(echo ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME | tr '[A-Z]' '[a-z]')" >> $GITHUB_ENV
+         -  name: Set Env
+            run: |
+               IMAGE_VERSION=${{ github.ref_name }}
+               # Strip "v" prefix from tag name
+               [[ "${{ github.ref }}" == "refs/tags/"* ]] && IMAGE_VERSION=$(echo $IMAGE_VERSION | sed -e 's/^v//')
+               echo "IMAGE_VERSION=$IMAGE_VERSION" >> $GITHUB_ENV
+         
+               echo "IMAGE_ID=$(echo ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME | tr '[A-Z]' '[a-z]')" >> $GITHUB_ENV
 
          # region See: https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#upgrading-a-workflow-that-accesses-ghcrio     
          -  name: Use QEMU
             uses: docker/setup-qemu-action@master
             with:
              platforms: all
+
+         -  name: Testing metadata extraction
+            id: meta
+            uses: docker/metadata-action@master
+            with:
+              images: kokomo123/5etools-img
+              tags: |
+                add-arm64-building
+                type=edge
+                type=sha
                       
          - name: Set up Docker Buildx
            id: buildx
@@ -80,9 +90,9 @@ jobs:
                echo IMAGE_ID=$IMAGE_ID
                echo IMAGE_VERSION=$IMAGE_VERSION
                docker tag $IMAGE_ID $IMAGE_ID:$IMAGE_VERSION
-               [[ "${{ github.ref }}" == "refs/tags/"* ]] && docker tag $IMAGE_NAME $IMAGE_ID:add-arm64-building
+               [[ "${{ github.ref }}" == "refs/tags/"* ]] && docker tag $IMAGE_NAME $IMAGE_ID:latest
                docker push $IMAGE_ID:$IMAGE_VERSION
-               docker push $IMAGE_ID:add-arm64-building
+               docker push $IMAGE_ID:latest
                
              
                
