@@ -59,16 +59,6 @@ jobs:
             uses: docker/setup-qemu-action@master
             with:
              platforms: all
-
-         -  name: Testing metadata extraction
-            id: meta
-            uses: docker/metadata-action@master
-            with:
-              images: kokomo123/5etools-img
-              tags: |
-                add-arm64-building
-                type=edge
-                type=sha
                       
          - name: Set up Docker Buildx
            id: buildx
@@ -83,16 +73,17 @@ jobs:
              context: .
              builder: ${{ steps.buildx.outputs.name }}
              platforms: linux/arm64,linux/amd64
-             push: false
+             push: true
+             tags: kokomo123/5etools-img:latest
 
          -  name: Push image
             run: |
                echo IMAGE_ID=$IMAGE_ID
                echo IMAGE_VERSION=$IMAGE_VERSION
                docker tag $IMAGE_ID $IMAGE_ID:$IMAGE_VERSION
-               [[ "${{ github.ref }}" == "refs/tags/"* ]] && docker tag $IMAGE_NAME $IMAGE_ID:add-arm64-building
+               [[ "${{ github.ref }}" == "refs/tags/"* ]] && docker tag $IMAGE_NAME $IMAGE_ID:latest
                docker push $IMAGE_ID:$IMAGE_VERSION
-               docker push $IMAGE_ID:add-arm64-building
+               docker push $IMAGE_ID:latest
                
              
                
