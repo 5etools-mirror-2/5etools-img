@@ -76,14 +76,14 @@ jobs:
              push: true
              tags: ghcr.io/kokomo123/5etools-img:latest,ghcr.io/kokomo123/5etools-img:testing
 
-         -  name: Push image
-            run: |
-               echo IMAGE_ID=$IMAGE_ID
-               echo IMAGE_VERSION=$IMAGE_VERSION
-               docker tag $IMAGE_ID $IMAGE_ID:$IMAGE_VERSION
-               [[ "${{ github.ref }}" == "refs/tags/"* ]] && docker tag $IMAGE_NAME $IMAGE_ID:latest
-               docker push $IMAGE_ID:$IMAGE_VERSION
-               docker push $IMAGE_ID:latest
+         #-  name: Push image
+         #   run: |
+         #      echo IMAGE_ID=$IMAGE_ID
+         #      echo IMAGE_VERSION=$IMAGE_VERSION
+         #      docker tag $IMAGE_ID $IMAGE_ID:$IMAGE_VERSION
+         #      [[ "${{ github.ref }}" == "refs/tags/"* ]] && docker tag $IMAGE_NAME $IMAGE_ID:latest
+         #      docker push $IMAGE_ID:$IMAGE_VERSION
+         #      docker push $IMAGE_ID:latest
                
              
                
