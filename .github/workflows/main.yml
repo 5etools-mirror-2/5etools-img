@@ -17,27 +17,27 @@ concurrency:
    cancel-in-progress: true
 
 jobs:
-   create-release:
-      runs-on: ubuntu-latest
-      steps:
-         -  uses: actions/checkout@master
+   #create-release:
+      #runs-on: ubuntu-latest
+      #steps:
+      #   -  uses: actions/checkout@master
 
-         -  name: Archive Images
-            run: |
-               rm -rf docker Dockerfile
-               mkdir -p img
-               ls | grep -v img | xargs mv -t img
-               zip -r -s 500m img-${{ github.ref_name }}.zip img/
+      #   -  name: Archive Images
+      #      run: |
+      #         rm -rf docker Dockerfile
+      #         mkdir -p img
+      #         ls | grep -v img | xargs mv -t img
+      #         zip -r -s 500m img-${{ github.ref_name }}.zip img/
 
-         -  name: Upload Release
+      #   -  name: Upload Release
             # Add the files one-by-one in an effort to avoid timeouts
             # Sleep between creating the release and adding files, as the release takes time to be created (?)
-            run: |
-               gh release create "${{github.ref_name}}" --title "${{github.ref_name}}" --notes "Version ${{ github.ref_name }}"
-               sleep 10
-               for f in $(find . -name 'img-${{ github.ref_name }}.*' -print); do gh release upload ${{ github.ref_name }} $f; done
-            env:
-               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #      run: |
+      #         gh release create "${{github.ref_name}}" --title "${{github.ref_name}}" --notes "Version ${{ github.ref_name }}"
+      #         sleep 10
+      #         for f in $(find . -name 'img-${{ github.ref_name }}.*' -print); do gh release upload ${{ github.ref_name }} $f; done
+      #      env:
+      #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
    create-image:
       runs-on: ubuntu-latest
