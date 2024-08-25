@@ -75,6 +75,7 @@ jobs:
              platforms: linux/arm64,linux/amd64
              push: false
              tags: ghcr.io/kokomo123/5etools-img:latest,ghcr.io/kokomo123/5etools-img:testing
+             load: true
 
          -  name: Push image
             run: |
