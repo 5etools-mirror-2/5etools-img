@@ -60,6 +60,19 @@ jobs:
             with:
              platforms: all
                       
+         - name: Free Disk Space (Ubuntu)
+           uses: insightsengineering/disk-space-reclaimer@v1
+           with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+            tools-cache: true
+            android: true
+            dotnet: true
+            haskell: true
+            large-packages: true
+            swap-storage: true
+            docker-images: false
+      
          - name: Set up Docker Buildx
            id: buildx
            uses: docker/setup-buildx-action@master
@@ -73,9 +86,8 @@ jobs:
              context: .
              builder: ${{ steps.buildx.outputs.name }}
              platforms: linux/arm64,linux/amd64
-             push: false
+             push: true
              tags: ghcr.io/kokomo123/5etools-img:latest,ghcr.io/kokomo123/5etools-img:testing
-             load: true
 
          -  name: Push image
             run: |
