@@ -74,7 +74,9 @@ jobs:
              builder: ${{ steps.buildx.outputs.name }}
              platforms: linux/arm64,linux/amd64
              push: true
-             tags: kokomo123/5etools-img:latest
+             tags: 
+              - kokomo123/5etools-img:latest
+              - kokomo123/5etools-img:testing
 
          -  name: Push image
             run: |
