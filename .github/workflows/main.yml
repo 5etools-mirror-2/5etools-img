@@ -44,20 +44,19 @@ jobs:
       steps:
          -  uses: actions/checkout@master
 
+         # Avoid the following error when building multiple large images:
+         # `System.IO.IOException: No space left on device : '/home/runner/runners/2.319.1/_diag/Worker_20240826-130726-utc.log'`
+         # See also: https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
+         -  name: Free Disk Space (Ubuntu)
+            uses: insightsengineering/disk-space-reclaimer@v1
+            with:
+               android: true
+               dotnet: true
+               haskell: true
+               large-packages: true
+               swap-storage: true
+               docker-images: false
          # See: https://stackoverflow.com/a/58178121
-         #-  name: Free Disk Space (Ubuntu)
-            #uses: insightsengineering/disk-space-reclaimer@v1
-            #with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-            #   tools-cache: true
-            #   android: true
-            #   dotnet: true
-            #   haskell: true
-            #   large-packages: true
-            #   swap-storage: true
-            #   docker-images: false
-
          -  name: Set Env
             run: |
                IMAGE_VERSION=${{ github.ref_name }}
