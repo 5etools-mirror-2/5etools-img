@@ -45,18 +45,18 @@ jobs:
          -  uses: actions/checkout@master
 
          # See: https://stackoverflow.com/a/58178121
-         -  name: Free Disk Space (Ubuntu)
-            uses: insightsengineering/disk-space-reclaimer@v1
-            with:
+         #-  name: Free Disk Space (Ubuntu)
+            #uses: insightsengineering/disk-space-reclaimer@v1
+            #with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
-               tools-cache: true
-               android: true
-               dotnet: true
-               haskell: true
-               large-packages: true
-               swap-storage: true
-               docker-images: false
+            #   tools-cache: true
+            #   android: true
+            #   dotnet: true
+            #   haskell: true
+            #   large-packages: true
+            #   swap-storage: true
+            #   docker-images: false
 
          -  name: Set Env
             run: |
