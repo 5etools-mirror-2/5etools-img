@@ -45,6 +45,19 @@ jobs:
          -  uses: actions/checkout@master
 
          # See: https://stackoverflow.com/a/58178121
+         -  name: Free Disk Space (Ubuntu)
+            uses: insightsengineering/disk-space-reclaimer@v1
+            with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+            tools-cache: true
+            android: true
+            dotnet: true
+            haskell: true
+            large-packages: true
+            swap-storage: true
+            docker-images: false
+            
          -  name: Set Env
             run: |
                IMAGE_VERSION=${{ github.ref_name }}
@@ -58,20 +71,7 @@ jobs:
          -  name: Use QEMU
             uses: docker/setup-qemu-action@master
             with:
-             platforms: all
-                      
-         - name: Free Disk Space (Ubuntu)
-           uses: insightsengineering/disk-space-reclaimer@v1
-           with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-            tools-cache: true
-            android: true
-            dotnet: true
-            haskell: true
-            large-packages: true
-            swap-storage: true
-            docker-images: false
+             platforms: arm64,amd64
       
          - name: Set up Docker Buildx
            id: buildx
@@ -87,5 +87,5 @@ jobs:
              builder: ${{ steps.buildx.outputs.name }}
              platforms: linux/arm64,linux/amd64
              push: true
-             tags: ghcr.io/kokomo123/5etools-img:latest               
+             tags: ghcr.io/${{ github.repository_owner }}/5etools-img:latest               
          # endregion
